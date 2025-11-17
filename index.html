@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ELALMY_Link — ัÝฺ ใแÝวส ๆอีๆแ ฺแ์ ัวศุ ใศวิั</title>
+  <title>ELALMY_Link โ€” ุฑูุน ุงูู…ูู ุนูู ุงูุฑุงุจุท ุงูู…ุจุงุดุฑ</title>
   <style>
     :root{--bg:#071124;--card:#0f1724;--accent:#00ff9f;color-scheme:dark}
     *{box-sizing:border-box}
@@ -27,30 +27,30 @@
 </head>
 <body>
   <div class="wrap">
-    <h1>รฯวษ ัÝฺ วแใแÝวส — วอีแ ฺแ์ ัวศุ ใศวิั</h1>
+    <h1>ุงุฏุฉ ุฑูุน ุงูู…ููุงุช_ุฑุงุจุท ู…ุจุงุดุฑ</h1>
     <div class="card">
-      <div class="small">วฮสวั ใแÝ ใไ ฬๅวา฿ (Ýํฯํๆก ีๆัษก APKก ZIPก รÛวไํ...)</div>
+      <div class="small">ุงุฎุชุงุฑ ู…ูู ู…ู ุฌูุงุฒู (ููุฏููุ ุตูุฑุฉุ APKุ ZIPุ ุฃุบุงูู...</div>
       <div style="height:12px"></div>
       <div class="row">
         <input id="fileInput" type="file">
-        <button class="btn" id="uploadBtn">วัÝฺ ๆวอีแ ฺแ์ ัวศุ</button>
+        <button class="btn" id="uploadBtn">ุงุฑูุน ูุงุญุตู ุนูู ุฑุงุจุท</button>
         <select id="visibility">
-          <option value="public" selected>ฺวใ (Anyone with link)</option>
-          <option value="private">ฮวี (ใอใํ)</option>
+          <option value="public" selected>ุนุงู…(Anyone with link)</option>
+          <option value="private">ุฎุงุต (ู…ุญู…ู)</option>
         </select>
       </div>
-      <div class="help">ใแวอูษ: วแ฿ๆฯ ํอสวฬ ลฺฯวฯวส <strong>Firebase</strong>. ึฺ firebaseConfig Þศแ วแไิั.</div>
+      <div class="help">ู…ูุงุญุธุฉ: ุงูููุฏ ูุญุชุงุฌ ุฅุนุฏุงุฏุงุช <strong>Firebase</strong> ุถุน firebaseConfig ูุจู ุงููุดุฑ.</div>
 
       <div class="list" id="uploads"></div>
     </div>
 
     <div class="help">
-      ฮุๆวส สÝฺํแ Firebase:
+      ุฎุทูุงุช ุชูุนูู Firebase:
       <ol>
-        <li>วฯฮแ ลแ์ <strong>console.firebase.google.com</strong> ๆรไิฦ ใิัๆฺ ฬฯํฯ.</li>
-        <li>วะๅศ ลแ์ Storage ๆรไิฦ Bucket ๆวÝสอ วแÞัวมษ.</li>
-        <li>วไำฮ ฿วฦไ <code>firebaseConfig</code> ๆวแีÞๅ Ýํ วแ฿ๆฯ ศวแรำÝแ.</li>
-        <li>วัÝฺ ๅะว วแใแÝ ฺแ์ GitHub Pages ๆำํฺใแ วแใๆÞฺ.</li>
+       <li>ุงุฏุฎู ุฅูู <strong>console.firebase.google.com</strong> ูุฃูุดุฆ ู…ุดุฑูุน ุฌุฏูุฏ.</li>
+        <li>ุงุฐูุจ ุฅูู Storage ูุฃูุดุฆ Bucket ูุงูุชุญ ุงููุฑุงุกุฉ.</li>
+        <li>ุงูุณุฎ ูุงุฆู <code>firebaseConfig</code> ูุงูุตูู ูู ุงูููุฏ ุจุงูุฃุณูู.</li>
+        <li>ุงุฑูุน ูุฐุง ุงูู…ูู ุนูู GitHub Pages ูุณูุนู…ู ุงูู…ููุน.</li>
       </ol>
     </div>
   </div>
@@ -60,7 +60,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
   <script>
-    // --- ึฺ ลฺฯวฯวส Firebase วแฮวีษ ศ฿ ๅไว ---
+    // ---  ุถุน ุฅุนุฏุงุฏุงุช Firebase ุงูุฎุงุตุฉ ุจู ููุง ---
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
       authDomain: "YOUR_AUTH_DOMAIN",
@@ -81,7 +81,7 @@
 
     uploadBtn.addEventListener('click', async ()=>{
       const file = fileInput.files[0];
-      if(!file) return alert('วฮสั ใแÝ รๆแว๐');
+      if(!file) return alert('ุงุฎุชุฑ ู…ูู ุฃููุงู');
 
       const folder = 'uploads/';
       const timestamp = Date.now();
@@ -96,11 +96,11 @@
       el.innerHTML = `
         <div class="meta">
           <div style="font-weight:700">${escapeHtml(file.name)}</div>
-          <div class="small">อฬใ: ${Math.round(file.size/1024)} KB — ไๆฺ: ${file.type || 'Ûํั ใฺัๆÝ'}</div>
+          <div class="small">ุญุฌู…: ${Math.round(file.size/1024)} KB โ€” ููุน: ${file.type || 'ุบูุฑ ู…ุนุฑูู'}</div>
           <div class="progress" style="margin-top:8px"><div class="bar"></div></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
-          <div class="small">ฬวั๒ วแัÝฺ...</div>
+          <div class="small">ุฌุงุฑู ุงูุฑูุน...</div>
         </div>
       `;
       uploads.prepend(el);
@@ -110,14 +110,14 @@
         const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
         bar.style.width = pct + '%';
       }, error=>{
-        alert('ฮุร: ' + error.message);
+        alert('ุฎุทุฃ: ' + error.message);
       }, async ()=>{
         const url = await ref.getDownloadURL();
         el.querySelector('div[style]').nextElementSibling.innerHTML = `
-          <a class='link' href='${url}' target='_blank'>Ýสอ วแัวศุ</a>
-          <a class='link' href='${url}' download style='margin-top:6px;display:inline-block'>สอใํแ</a>
+          <a class='link' href='${url}' target='_blank'>ูุชุญ ุงูุฑุงุจุท</a>
+          <a class='link' href='${url}' download style='margin-top:6px;display:inline-block'>ุชุญู…ูู</a>
         `;
-        el.querySelector('.small').textContent = 'สใ — ัวศุ ฬวๅา';
+        el.querySelector('.small').textContent = 'ุชู… โ€” ุฑุงุจุท ุฌุงูุฒ';
       });
     });
 
@@ -131,3 +131,4 @@
   </footer>
 </body>
 </html>
+
