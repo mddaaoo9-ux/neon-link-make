@@ -1,33 +1,133 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!doctype html>
+<html lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ACCESS TERMINAL</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ELALMY_Link ó —›⁄ „·›«  ÊÕ’Ê· ⁄·Ï —«»ÿ „»«‘—</title>
+  <style>
+    :root{--bg:#071124;--card:#0f1724;--accent:#00ff9f;color-scheme:dark}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,Arial,Helvetica,sans-serif;direction:rtl;background:linear-gradient(180deg,#071124,#0a0f1b);color:#fff;padding:24px}
+    .wrap{max-width:980px;margin:0 auto}
+    h1{margin:0 0 12px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03)}
+    .row{display:flex;gap:12px;align-items:center}
+    input[type=file]{padding:8px;background:transparent;color:#fff}
+    .btn{background:linear-gradient(90deg,rgba(0,255,159,0.12),rgba(124,77,255,0.06));border:none;padding:10px 14px;border-radius:10px;color:#fff;cursor:pointer}
+    .list{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+    .item{background:rgba(255,255,255,0.02);padding:10px;border-radius:10px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+    .meta{display:flex;flex-direction:column}
+    a.link{color:var(--accent);text-decoration:none;font-weight:700}
+    .small{font-size:13px;color:rgba(255,255,255,0.7)}
+    .progress{height:8px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden}
+    .bar{height:100%;width:0%;background:linear-gradient(90deg,#00ff9f,#7c4dff)}
+    .help{margin-top:12px;color:rgba(255,255,255,0.7);font-size:13px}
+    @media(max-width:720px){.row{flex-direction:column;align-items:stretch}}
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <h1>√œ«… —›⁄ «·„·›«  ó «Õ’· ⁄·Ï —«»ÿ „»«‘—</h1>
+    <div class="card">
+      <div class="small">«Œ «— „·› „‰ ÃÂ«“ﬂ (›ÌœÌÊ° ’Ê—…° APK° ZIP° √€«‰Ì...)</div>
+      <div style="height:12px"></div>
+      <div class="row">
+        <input id="fileInput" type="file">
+        <button class="btn" id="uploadBtn">«—›⁄ Ê«Õ’· ⁄·Ï —«»ÿ</button>
+        <select id="visibility">
+          <option value="public" selected>⁄«„ (Anyone with link)</option>
+          <option value="private">Œ«’ („Õ„Ì)</option>
+        </select>
+      </div>
+      <div class="help">„·«ÕŸ…: «·ﬂÊœ ÌÕ «Ã ≈⁄œ«œ«  <strong>Firebase</strong>. ÷⁄ firebaseConfig ﬁ»· «·‰‘—.</div>
 
-<div class="scanlines"></div>
-
-<div class="container">
-    <h1 class="glitch" data-text="ACCESS_DENIED">ACCESS_DENIED</h1>
-
-    <p id="msg" class="typewriter">
-        Initializing secure terminal...  
-        Checking user identity...  
-        WARNING: Unknown access detected.  
-        System breach in progress...
-    </p>
-
-    <div class="buttons">
-        <button id="btn">TRY AGAIN</button>
-        <button id="panic">PANIC MODE</button>
+      <div class="list" id="uploads"></div>
     </div>
 
-    <p class="tiny">v1.0.7 - encrypted session</p>
-</div>
+    <div class="help">
+      ŒÿÊ«   ›⁄Ì· Firebase:
+      <ol>
+        <li>«œŒ· ≈·Ï <strong>console.firebase.google.com</strong> Ê√‰‘∆ „‘—Ê⁄ ÃœÌœ.</li>
+        <li>«–Â» ≈·Ï Storage Ê√‰‘∆ Bucket Ê«› Õ «·ﬁ—«¡….</li>
+        <li>«‰”Œ ﬂ«∆‰ <code>firebaseConfig</code> Ê«·’ﬁÂ ›Ì «·ﬂÊœ »«·√”›·.</li>
+        <li>«—›⁄ Â–« «·„·› ⁄·Ï GitHub Pages Ê”Ì⁄„· «·„Êﬁ⁄.</li>
+      </ol>
+    </div>
+  </div>
 
-<script src="script.js"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
+  <script>
+    // --- ÷⁄ ≈⁄œ«œ«  Firebase «·Œ«’… »ﬂ Â‰« ---
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    // ----------------------------------------
+
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    const fileInput = document.getElementById('fileInput');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const uploads = document.getElementById('uploads');
+    const visibility = document.getElementById('visibility');
+
+    uploadBtn.addEventListener('click', async ()=>{
+      const file = fileInput.files[0];
+      if(!file) return alert('«Œ — „·› √Ê·«');
+
+      const folder = 'uploads/';
+      const timestamp = Date.now();
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-?-? ]/g,'');
+      const path = folder + timestamp + '_' + safeName;
+      const ref = storage.ref().child(path);
+
+      const task = ref.put(file);
+
+      const el = document.createElement('div'); 
+      el.className='item';
+      el.innerHTML = `
+        <div class="meta">
+          <div style="font-weight:700">${escapeHtml(file.name)}</div>
+          <div class="small">ÕÃ„: ${Math.round(file.size/1024)} KB ó ‰Ê⁄: ${file.type || '€Ì— „⁄—Ê›'}</div>
+          <div class="progress" style="margin-top:8px"><div class="bar"></div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+          <div class="small">Ã«—Ú «·—›⁄...</div>
+        </div>
+      `;
+      uploads.prepend(el);
+      const bar = el.querySelector('.bar');
+
+      task.on('state_changed', snapshot=>{
+        const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        bar.style.width = pct + '%';
+      }, error=>{
+        alert('Œÿ√: ' + error.message);
+      }, async ()=>{
+        const url = await ref.getDownloadURL();
+        el.querySelector('div[style]').nextElementSibling.innerHTML = `
+          <a class='link' href='${url}' target='_blank'>› Õ «·—«»ÿ</a>
+          <a class='link' href='${url}' download style='margin-top:6px;display:inline-block'> Õ„Ì·</a>
+        `;
+        el.querySelector('.small').textContent = ' „ ó —«»ÿ Ã«Â“';
+      });
+    });
+
+    function escapeHtml(s){ 
+      return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : ''; 
+    }
+  </script>
+
+  <footer class="w-full text-center py-4 text-gray-500 text-sm">
+    Made with ?? by ELALMY
+  </footer>
 </body>
 </html>
