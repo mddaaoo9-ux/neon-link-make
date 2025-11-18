@@ -1,134 +1,117 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ELALMY_Link — رفع الملف علي الرابط المباشر</title>
-  <style>
-    :root{--bg:#071124;--card:#0f1724;--accent:#00ff9f;color-scheme:dark}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,Arial,Helvetica,sans-serif;direction:rtl;background:linear-gradient(180deg,#071124,#0a0f1b);color:#fff;padding:24px}
-    .wrap{max-width:980px;margin:0 auto}
-    h1{margin:0 0 12px}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03)}
-    .row{display:flex;gap:12px;align-items:center}
-    input[type=file]{padding:8px;background:transparent;color:#fff}
-    .btn{background:linear-gradient(90deg,rgba(0,255,159,0.12),rgba(124,77,255,0.06));border:none;padding:10px 14px;border-radius:10px;color:#fff;cursor:pointer}
-    .list{margin-top:16px;display:flex;flex-direction:column;gap:8px}
-    .item{background:rgba(255,255,255,0.02);padding:10px;border-radius:10px;display:flex;justify-content:space-between;gap:8px;align-items:center}
-    .meta{display:flex;flex-direction:column}
-    a.link{color:var(--accent);text-decoration:none;font-weight:700}
-    .small{font-size:13px;color:rgba(255,255,255,0.7)}
-    .progress{height:8px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden}
-    .bar{height:100%;width:0%;background:linear-gradient(90deg,#00ff9f,#7c4dff)}
-    .help{margin-top:12px;color:rgba(255,255,255,0.7);font-size:13px}
-    @media(max-width:720px){.row{flex-direction:column;align-items:stretch}}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Neon Link Maker</title>
+
+<style>
+body {
+  background: #000;
+  color: #0f0;
+  font-family: Arial;
+  text-align: center;
+  padding: 40px;
+}
+.container {
+  width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 2px solid #0f0;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #0f0;
+}
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  background: black;
+  color: #0f0;
+  border: 1px solid #0f0;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #0f0;
+}
+.link-box {
+  margin-top: 20px;
+  word-break: break-all;
+  border: 1px solid #0f0;
+  padding: 10px;
+  border-radius: 8px;
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <h1>ادة رفع الملفات_رابط مباشر</h1>
-    <div class="card">
-      <div class="small">اختار ملف من جهازك (فيديو، صورة، APK، ZIP، أغاني...</div>
-      <div style="height:12px"></div>
-      <div class="row">
-        <input id="fileInput" type="file">
-        <button class="btn" id="uploadBtn">ارفع واحصل على رابط</button>
-        <select id="visibility">
-          <option value="public" selected>عام(Anyone with link)</option>
-          <option value="private">خاص (محمي)</option>
-        </select>
-      </div>
-      <div class="help">ملاحظة: الكود يحتاج إعدادات <strong>Firebase</strong> ضع firebaseConfig قبل النشر.</div>
 
-      <div class="list" id="uploads"></div>
-    </div>
+<div class="container">
+  <h2>Neon Link Maker</h2>
 
-    <div class="help">
-      خطوات تفعيل Firebase:
-      <ol>
-       <li>ادخل إلى <strong>console.firebase.google.com</strong> وأنشئ مشروع جديد.</li>
-        <li>اذهب إلى Storage وأنشئ Bucket وافتح القراءة.</li>
-        <li>انسخ كائن <code>firebaseConfig</code> والصقه في الكود بالأسفل.</li>
-        <li>ارفع هذا الملف على GitHub Pages وسيعمل الموقع.</li>
-      </ol>
-    </div>
-  </div>
+  <input type="file" id="fileInput">
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <button onclick="upload()">رفع الملف</button>
 
-  <script>
-    // ---  ضع إعدادات Firebase الخاصة بك هنا ---
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-    // ----------------------------------------
+  <div id="status" style="margin-top:15px;"></div>
 
-    firebase.initializeApp(firebaseConfig);
-    const storage = firebase.storage();
+  <div id="result" class="link-box" style="display:none;"></div>
+</div>
 
-    const fileInput = document.getElementById('fileInput');
-    const uploadBtn = document.getElementById('uploadBtn');
-    const uploads = document.getElementById('uploads');
-    const visibility = document.getElementById('visibility');
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
-    uploadBtn.addEventListener('click', async ()=>{
-      const file = fileInput.files[0];
-      if(!file) return alert('اختر ملف أولاً');
+<script>
+// ====== إعداد Firebase ======
+const firebaseConfig = {
+  apiKey: "AIzaSyCsnTwRzeL1x4pjXrv8z8ePxdcUxOGMbDE",
+  authDomain: "uploadtest-2b9a3.firebaseapp.com",
+  projectId: "uploadtest-2b9a3",
+  storageBucket: "uploadtest-2b9a3.appspot.com",
+  messagingSenderId: "943945720483",
+  appId: "1:943945720483:web:ea3fc2b5071feb385344b0"
+};
+firebase.initializeApp(firebaseConfig);
 
-      const folder = 'uploads/';
-      const timestamp = Date.now();
-      const safeName = file.name.replace(/[^a-zA-Z0-9._-?-? ]/g,'');
-      const path = folder + timestamp + '_' + safeName;
-      const ref = storage.ref().child(path);
+// ====== دالة النسخ ======
+function copyToClipboard(text){
+  navigator.clipboard.writeText(text)
+    .then(()=> alert("✔ تم نسخ الرابط تلقائيًا:\n" + text))
+    .catch(()=> alert("❌ لم يتم النسخ تلقائيًا"));
+}
 
-      const task = ref.put(file);
+// ====== الرفع ======
+async function upload(){
+  const file = document.getElementById("fileInput").files[0];
 
-      const el = document.createElement('div'); 
-      el.className='item';
-      el.innerHTML = `
-        <div class="meta">
-          <div style="font-weight:700">${escapeHtml(file.name)}</div>
-          <div class="small">حجم: ${Math.round(file.size/1024)} KB — نوع: ${file.type || 'غير معروف'}</div>
-          <div class="progress" style="margin-top:8px"><div class="bar"></div></div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
-          <div class="small">جارٍ الرفع...</div>
-        </div>
-      `;
-      uploads.prepend(el);
-      const bar = el.querySelector('.bar');
+  if (!file){
+    alert("اختار ملف الأول");
+    return;
+  }
 
-      task.on('state_changed', snapshot=>{
-        const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        bar.style.width = pct + '%';
-      }, error=>{
-        alert('خطأ: ' + error.message);
-      }, async ()=>{
-        const url = await ref.getDownloadURL();
-        el.querySelector('div[style]').nextElementSibling.innerHTML = `
-          <a class='link' href='${url}' target='_blank'>فتح الرابط</a>
-          <a class='link' href='${url}' download style='margin-top:6px;display:inline-block'>تحميل</a>
-        `;
-        el.querySelector('.small').textContent = 'تم — رابط جاهز';
-      });
-    });
+  document.getElementById("status").innerHTML = "⏳ جاري الرفع...";
 
-    function escapeHtml(s){ 
-      return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') : ''; 
-    }
-  </script>
+  // رفع الملف
+  const ref = firebase.storage().ref("uploads/" + file.name);
+  await ref.put(file);
 
-  <footer class="w-full text-center py-4 text-gray-500 text-sm">
-    Made with ?? by ELALMY
-  </footer>
+  // الحصول على الرابط
+  const url = await ref.getDownloadURL();
+
+  // نسخ تلقائي
+  copyToClipboard(url);
+
+  // عرض الرابط
+  document.getElementById("result").style.display = "block";
+  document.getElementById("result").innerHTML = `
+    <b>الرابط جاهز:</b><br>
+    <a href="${url}" target="_blank">${url}</a>
+    <br><br>
+    <button onclick="copyToClipboard('${url}')">نسخ مرة أخرى</button>
+  `;
+
+  document.getElementById("status").innerHTML = "✔ تم الرفع بنجاح!";
+}
+</script>
+
 </body>
 </html>
-
