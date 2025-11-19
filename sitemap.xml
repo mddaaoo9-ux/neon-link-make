@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- الصفحة الرئيسية -->
   <url>
-    <loc>https://example.com/</loc>
+    <loc>https://example.com/index.html</loc>
     <lastmod>2025-11-19</lastmod>
     <priority>1.0</priority>
   </url>
 
+  <!-- صفحة رفع الملفات -->
   <url>
-    <loc>https://example.com/upload</loc>
+    <loc>https://example.com/upload.html</loc>
     <lastmod>2025-11-19</lastmod>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
 
+  <!-- صفحة من نحن -->
   <url>
-    <loc>https://example.com/about</loc>
+    <loc>https://example.com/about.html</loc>
     <lastmod>2025-11-19</lastmod>
     <priority>0.5</priority>
+  </url>
+
+  <!-- صفحة اتصل بنا -->
+  <url>
+    <loc>https://example.com/contact.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- صفحة خريطة الموقع -->
+  <url>
+    <loc>https://example.com/sitemap.html</loc>
+    <lastmod>2025-11-19</lastmod>
+    <priority>0.4</priority>
   </url>
 
 </urlset>
