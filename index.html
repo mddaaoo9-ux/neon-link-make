@@ -3,115 +3,128 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Neon Link Maker</title>
+<title>العالمي</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
 body {
   background: #000;
   color: #0f0;
-  font-family: Arial;
+  font-family: 'Orbitron', Arial, sans-serif;
   text-align: center;
   padding: 40px;
 }
+
 .container {
   width: 400px;
   margin: auto;
   padding: 20px;
   border: 2px solid #0f0;
-  border-radius: 12px;
-  box-shadow: 0 0 20px #0f0;
+  border-radius: 16px;
+  box-shadow: 0 0 30px #0f0;
+  background: rgba(0,0,0,0.6);
+  animation: glow 2s infinite alternate;
 }
+
+h2 {
+  font-size: 28px;
+  color: #0f0;
+  text-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0;
+  margin-bottom: 20px;
+  animation: flicker 1.5s infinite;
+}
+
 button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   font-size: 18px;
   cursor: pointer;
   background: black;
   color: #0f0;
-  border: 1px solid #0f0;
-  border-radius: 8px;
-  box-shadow: 0 0 10px #0f0;
+  border: 2px solid #0f0;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #0f0;
+  transition: 0.3s;
 }
+button:hover {
+  color: #fff;
+  box-shadow: 0 0 20px #0f0, 0 0 30px #0f0, 0 0 40px #0f0;
+}
+
 .link-box {
   margin-top: 20px;
   word-break: break-all;
   border: 1px solid #0f0;
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
+  box-shadow: 0 0 10px #0f0;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 10px #0f0; }
+  to { box-shadow: 0 0 25px #0f0; }
+}
+
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0;
+  }
+  20%, 22%, 24%, 55% {
+    text-shadow: none;
+  }
 }
 </style>
-</head>
+
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
 <body>
-
 <div class="container">
-  <h2>Neon Link Maker</h2>
+  <h2>العالمي</h2>
 
-  <input type="file" id="fileInput">
+  <input type="hidden" role="uploadcare-uploader" id="fileInput" data-clearable="true">
 
   <button onclick="upload()">رفع الملف</button>
 
   <div id="status" style="margin-top:15px;"></div>
-
   <div id="result" class="link-box" style="display:none;"></div>
 </div>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-
 <script>
-// ====== إعداد Firebase ======
-const firebaseConfig = {
-  apiKey: "AIzaSyCsnTwRzeL1x4pjXrv8z8ePxdcUxOGMbDE",
-  authDomain: "uploadtest-2b9a3.firebaseapp.com",
-  projectId: "uploadtest-2b9a3",
-  storageBucket: "uploadtest-2b9a3.appspot.com",
-  messagingSenderId: "943945720483",
-  appId: "1:943945720483:web:ea3fc2b5071feb385344b0"
-};
-firebase.initializeApp(firebaseConfig);
-
-// ====== دالة النسخ ======
 function copyToClipboard(text){
   navigator.clipboard.writeText(text)
     .then(()=> alert("✔ تم نسخ الرابط تلقائيًا:\n" + text))
     .catch(()=> alert("❌ لم يتم النسخ تلقائيًا"));
 }
 
-// ====== الرفع ======
-async function upload(){
-  const file = document.getElementById("fileInput").files[0];
+function upload() {
+  const widget = uploadcare.Widget('#fileInput');
+  const file = widget.value();
 
-  if (!file){
+  if (!file) {
     alert("اختار ملف الأول");
     return;
   }
 
   document.getElementById("status").innerHTML = "⏳ جاري الرفع...";
 
-  // رفع الملف
-  const ref = firebase.storage().ref("uploads/" + file.name);
-  await ref.put(file);
+  file.done(function(fileInfo){
+    const url = fileInfo.cdnUrl;
 
-  // الحصول على الرابط
-  const url = await ref.getDownloadURL();
+    copyToClipboard(url);
 
-  // نسخ تلقائي
-  copyToClipboard(url);
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").innerHTML = `
+      <b>الرابط جاهز:</b><br>
+      <a href="${url}" target="_blank">${url}</a>
+      <br><br>
+      <button onclick="copyToClipboard('${url}')">نسخ مرة أخرى</button>
+    `;
 
-  // عرض الرابط
-  document.getElementById("result").style.display = "block";
-  document.getElementById("result").innerHTML = `
-    <b>الرابط جاهز:</b><br>
-    <a href="${url}" target="_blank">${url}</a>
-    <br><br>
-    <button onclick="copyToClipboard('${url}')">نسخ مرة أخرى</button>
-  `;
-
-  document.getElementById("status").innerHTML = "✔ تم الرفع بنجاح!";
+    document.getElementById("status").innerHTML = "✔ تم الرفع بنجاح!";
+  });
 }
 </script>
-
 </body>
 </html>
