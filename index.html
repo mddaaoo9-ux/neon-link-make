@@ -17,6 +17,7 @@ input { width:90%; padding:10px; margin-top:10px; background:#000; border:1px so
 button { margin-top:15px; padding:10px 20px; background:#000; border:1px solid #0f0; color:#0f0; cursor:pointer; border-radius:6px; }
 textarea { width:100%; height:80px; background:#000; color:#0f0; margin-top:15px; border:1px solid #0f0; border-radius:8px; padding:10px; }
 #errorMsg { color:red; margin-top:10px; display:none; }
+#fileLink a { color: #0f0; text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -34,7 +35,7 @@ textarea { width:100%; height:80px; background:#000; color:#0f0; margin-top:15px
 </div>
 
 <!-- المحتوى -->
-<div id="content" style="display:none;">
+<div id="content">
 <header>
   <h1>موقع العالــمي</h1>
 </header>
@@ -42,19 +43,28 @@ textarea { width:100%; height:80px; background:#000; color:#0f0; margin-top:15px
 <div class="container">
   <h2>📄 المقال الرئيسي</h2>
   <div class="article-box" id="article">
-    هنا يتم وضع مقالك الأساسي… (هذا النص ثابت ولا يمكن لأحد تعديله)
+    موقع العاللمي لرفع الملفات يصنع لينك مباشر ل صوره او فديو او ملف اوحته APK كل الي انتا عزو هتلقي مرحبا بك
+    مستني منك تعليقك الحلو
+    وشكرا
   </div>
 
   <h2 style="margin-top:35px;">💬 التعليقات</h2>
-  <div class="comments" id="comments"></div>
-  <textarea id="newComment" placeholder="اكتب تعليقك هنا..."></textarea>
-  <button onclick="addComment()">إضافة تعليق</button>
+  <div class="comments" id="comments" style="display:none;"></div>
+  <textarea id="newComment" placeholder="اكتب تعليقك هنا..." style="display:none;"></textarea>
+  <button onclick="addComment()" style="display:none;">إضافة تعليق</button>
+
+  <h2 style="margin-top:35px;">📁 رفع الملفات</h2>
+  <input type="hidden" role="uploadcare-uploader" data-public-key="994dc8b431d0cb416e3c" />
+  <div id="fileLink" style="margin-top:15px;"></div>
 </div>
 </div>
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+
+<!-- Uploadcare Widget -->
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
 <script>
 // ===== Firebase Config =====
@@ -74,14 +84,8 @@ const provider = new firebase.auth.GoogleAuthProvider();
 // ===== تسجيل دخول Google =====
 function googleLogin(){
   auth.signInWithPopup(provider)
-  .then(() => {
-    document.getElementById('login').style.display = 'none';
-    document.getElementById('content').style.display = 'block';
-  })
-  .catch((error) => { 
-    document.getElementById('errorMsg').style.display='block';
-    document.getElementById('errorMsg').innerText = "حدث خطأ في تسجيل دخول Google: " + error.message;
-  });
+  .then(() => { showLoggedInFeatures(); })
+  .catch((error) => { showError("حدث خطأ في تسجيل دخول Google: " + error.message); });
 }
 
 // ===== تسجيل دخول البريد =====
@@ -89,14 +93,8 @@ function emailLogin(){
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      document.getElementById('login').style.display = 'none';
-      document.getElementById('content').style.display = 'block';
-    })
-    .catch((error) => {
-      document.getElementById('errorMsg').style.display='block';
-      document.getElementById('errorMsg').innerText = "حدث خطأ في تسجيل الدخول: " + error.message;
-    });
+    .then(() => { showLoggedInFeatures(); })
+    .catch((error) => { showError("حدث خطأ في تسجيل الدخول: " + error.message); });
 }
 
 // ===== إنشاء حساب جديد =====
@@ -104,14 +102,23 @@ function signUp(){
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   auth.createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      document.getElementById('login').style.display = 'none';
-      document.getElementById('content').style.display = 'block';
-    })
-    .catch((error) => {
-      document.getElementById('errorMsg').style.display='block';
-      document.getElementById('errorMsg').innerText = "حدث خطأ في إنشاء الحساب: " + error.message;
-    });
+    .then(() => { showLoggedInFeatures(); })
+    .catch((error) => { showError("حدث خطأ في إنشاء الحساب: " + error.message); });
+}
+
+// ===== عرض الأخطاء =====
+function showError(msg){
+  const e = document.getElementById('errorMsg');
+  e.style.display='block';
+  e.innerText = msg;
+}
+
+// ===== تفعيل التعليقات بعد تسجيل الدخول =====
+function showLoggedInFeatures(){
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('comments').style.display = 'block';
+  document.getElementById('newComment').style.display = 'block';
+  document.querySelector('button[onclick="addComment()"]').style.display = 'block';
 }
 
 // ===== التعليقات =====
@@ -124,6 +131,19 @@ function addComment(){
   document.getElementById('comments').appendChild(div);
   document.getElementById('newComment').value = '';
 }
+
+// ===== Uploadcare Widget =====
+UPLOADCARE_LOCALE = "ar";
+UPLOADCARE_TABS = "file camera url";
+UPLOADCARE_IMAGES_ONLY = false;
+
+const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+widget.onUploadComplete(function(fileInfo) {
+    document.getElementById('fileLink').innerHTML = `
+        <b>رابط الملف:</b><br>
+        <a href="${fileInfo.cdnUrl}" target="_blank">${fileInfo.cdnUrl}</a>
+    `;
+});
 </script>
 
 </body>
