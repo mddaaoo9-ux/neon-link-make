@@ -1,131 +1,172 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>العالمي</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>العالــمي - الرئيسية</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
-
 body {
   background: #000;
+  font-family: Arial, sans-serif;
   color: #0f0;
-  font-family: 'Orbitron', Arial, sans-serif;
+  direction: rtl;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: #000;
+  padding: 25px;
   text-align: center;
-  padding: 40px;
+  border-bottom: 2px solid #0f0;
+  box-shadow: 0 0 20px #0f0;
 }
-
+header h1 {
+  margin: 0;
+  font-size: 38px;
+  text-shadow: 0 0 12px #0f0;
+}
 .container {
-  width: 400px;
-  margin: auto;
+  width: 85%;
+  max-width: 900px;
+  margin: 40px auto;
+  background: #070707;
+  padding: 25px;
+  border: 2px solid #0f0;
+  border-radius: 15px;
+  box-shadow: 0 0 25px #0f0;
+}
+.article-box {
+  background: #111;
+  border: 2px solid #0f0;
   padding: 20px;
-  border: 2px solid #0f0;
-  border-radius: 16px;
-  box-shadow: 0 0 30px #0f0;
-  background: rgba(0,0,0,0.6);
-  animation: glow 2s infinite alternate;
-}
-
-h2 {
-  font-size: 28px;
-  color: #0f0;
-  text-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0;
-  margin-bottom: 20px;
-  animation: flicker 1.5s infinite;
-}
-
-button {
-  width: 100%;
-  padding: 14px;
-  font-size: 18px;
-  cursor: pointer;
-  background: black;
-  color: #0f0;
-  border: 2px solid #0f0;
   border-radius: 10px;
-  box-shadow: 0 0 15px #0f0;
-  transition: 0.3s;
+  min-height: 200px;
+  font-size: 20px;
+  line-height: 1.8;
 }
-button:hover {
-  color: #fff;
-  box-shadow: 0 0 20px #0f0, 0 0 30px #0f0, 0 0 40px #0f0;
-}
-
-.link-box {
-  margin-top: 20px;
-  word-break: break-all;
+.comments {
+  margin-top: 30px;
+  background: #111;
+  padding: 15px;
+  border-radius: 10px;
   border: 1px solid #0f0;
-  padding: 12px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px #0f0;
-  animation: glow 2s infinite alternate;
 }
-
-@keyframes glow {
-  from { box-shadow: 0 0 10px #0f0; }
-  to { box-shadow: 0 0 25px #0f0; }
+.comment {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #0f0;
 }
-
-@keyframes flicker {
-  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-    text-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0;
-  }
-  20%, 22%, 24%, 55% {
-    text-shadow: none;
-  }
+.login-box {
+  width: 300px;
+  margin: 80px auto;
+  background: #0a0a0a;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #0f0;
+  box-shadow: 0 0 20px #0f0;
+  text-align: center;
+}
+input {
+  width: 90%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #000;
+  border: 1px solid #0f0;
+  color: #0f0;
+  border-radius: 6px;
+}
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #000;
+  border: 1px solid #0f0;
+  color: #0f0;
+  cursor: pointer;
+  border-radius: 6px;
 }
 </style>
-
-<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
-
+</head>
 <body>
+
+<div id="login" class="login-box">
+  <h2>تسجيل الدخول</h2>
+  <input type="email" id="email" placeholder="البريد الإلكتروني">
+  <input type="password" id="password" placeholder="كلمة المرور">
+  <button onclick="emailLogin()">دخول عبر البريد</button>
+  <br><br>
+  <button onclick="googleLogin()">تسجيل دخول بواسطة Google</button>
+  <p style="color:red; display:none;" id="error">حدث خطأ في تسجيل الدخول</p>
+</div>
+
+<div id="content" style="display:none;">
+<header>
+  <h1>موقع العالــمي</h1>
+</header>
+
 <div class="container">
-  <h2>العالمي</h2>
+  <h2>📄 المقال الرئيسي</h2>
+  <div class="article-box" id="article">
+     مرحبا بك في موقع العالمي (ل انشاء لينكات) ل انشاء لينكات ل صور ل اغني لبرامج ل ملفات وغير.......
+    التسجيل مجاني والموقع مجاني بشكل كامل
+    وسوف يتم تحديث الموقع بشكل دوري
+    وايضا سوف نعلمك البرمجه 
+    قريبا........
+  </div>
 
-  <!-- إضافة public key -->
-  <input type="hidden" role="uploadcare-uploader" id="fileInput" data-clearable="true" data-public-key="994dc8b431d0cb416e3c">
+  <h2 style="margin-top:35px;">💬 التعليقات</h2>
+  <div class="comments" id="comments"></div>
 
-  <button onclick="upload()">رفع الملف</button>
-
-  <div id="status" style="margin-top:15px;"></div>
-  <div id="result" class="link-box" style="display:none;"></div>
+  <textarea id="newComment" style="width:100%; height:80px; background:#000; color:#0f0; margin-top:15px; border:1px solid #0f0; border-radius:8px; padding:10px;" placeholder="اكتب تعليقك هنا..."></textarea>
+  <button onclick="addComment()">إضافة تعليق</button>
+</div>
 </div>
 
 <script>
-function copyToClipboard(text){
-  navigator.clipboard.writeText(text)
-    .then(()=> alert("✔ تم نسخ الرابط تلقائيًا:\n" + text))
-    .catch(()=> alert("❌ لم يتم النسخ تلقائيًا"));
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_DOMAIN.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_BUCKET.appspot.com",
+  messagingSenderId: "YOUR_MSG_ID",
+  appId: "YOUR_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const provider = new firebase.auth.GoogleAuthProvider();
+function emailLogin(){
+  const email = document.getElementById('email').value;
+  const pass = document.getElementById('password').value;
+  firebase.auth().signInWithEmailAndPassword(email, pass)
+    .then(() => {
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+    })
+    .catch(() => {
+      document.getElementById('error').style.display = 'block';
+    });
 }
 
-function upload() {
-  const widget = uploadcare.Widget('#fileInput');
-  const file = widget.value();
-
-  if (!file) {
-    alert("اختار ملف الأول");
-    return;
-  }
-
-  document.getElementById("status").innerHTML = "⏳ جاري الرفع...";
-
-  file.done(function(fileInfo){
-    const url = fileInfo.cdnUrl;
-
-    copyToClipboard(url);
-
-    document.getElementById("result").style.display = "block";
-    document.getElementById("result").innerHTML = `
-      <b>الرابط جاهز:</b><br>
-      <a href="${url}" target="_blank">${url}</a>
-      <br><br>
-      <button onclick="copyToClipboard('${url}')">نسخ مرة أخرى</button>
-    `;
-
-    document.getElementById("status").innerHTML = "✔ تم الرفع بنجاح!";
-  });
+function googleLogin(){
+  firebase.auth().signInWithPopup(provider)
+    .then(result => {
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+    })
+    .catch(() => {
+      document.getElementById('error').style.display = 'block';
+    });
+}
+function addComment(){
+  const text = document.getElementById('newComment').value;
+  if(text.trim() === '') return;
+  const box = document.getElementById('comments');
+  const div = document.createElement('div');
+  div.className = 'comment';
+  div.innerText = text;
+  box.appendChild(div);
+  document.getElementById('newComment').value = '';
 }
 </script>
+
 </body>
 </html>
