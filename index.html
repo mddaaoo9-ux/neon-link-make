@@ -4,101 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>العالــمي - الرئيسية</title>
-
 <style>
-body {
-  background: #000;
-  font-family: Arial, sans-serif;
-  color: #0f0;
-  direction: rtl;
-  margin: 0;
-  padding: 0;
-}
-header {
-  background: #000;
-  padding: 25px;
-  text-align: center;
-  border-bottom: 2px solid #0f0;
-  box-shadow: 0 0 20px #0f0;
-}
-header h1 {
-  margin: 0;
-  font-size: 38px;
-  text-shadow: 0 0 12px #0f0;
-}
-.container {
-  width: 85%;
-  max-width: 900px;
-  margin: 40px auto;
-  background: #070707;
-  padding: 25px;
-  border: 2px solid #0f0;
-  border-radius: 15px;
-  box-shadow: 0 0 25px #0f0;
-}
-.article-box {
-  background: #111;
-  border: 2px solid #0f0;
-  padding: 20px;
-  border-radius: 10px;
-  min-height: 200px;
-  font-size: 20px;
-  line-height: 1.8;
-}
-.comments {
-  margin-top: 30px;
-  background: #111;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #0f0;
-}
-.comment {
-  padding: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px dashed #0f0;
-}
-.login-box {
-  width: 300px;
-  margin: 80px auto;
-  background: #0a0a0a;
-  padding: 20px;
-  border-radius: 12px;
-  border: 2px solid #0f0;
-  box-shadow: 0 0 20px #0f0;
-  text-align: center;
-}
-input {
-  width: 90%;
-  padding: 10px;
-  margin-top: 10px;
-  background: #000;
-  border: 1px solid #0f0;
-  color: #0f0;
-  border-radius: 6px;
-}
-button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: #000;
-  border: 1px solid #0f0;
-  color: #0f0;
-  cursor: pointer;
-  border-radius: 6px;
-}
+body { background: #000; font-family: Arial; color: #0f0; direction: rtl; margin:0; padding:0; }
+header { background: #000; padding: 25px; text-align:center; border-bottom:2px solid #0f0; box-shadow:0 0 20px #0f0; }
+header h1 { margin:0; font-size:38px; text-shadow:0 0 12px #0f0; }
+.container { width:85%; max-width:900px; margin:40px auto; background:#070707; padding:25px; border:2px solid #0f0; border-radius:15px; box-shadow:0 0 25px #0f0; }
+.article-box { background:#111; border:2px solid #0f0; padding:20px; border-radius:10px; min-height:200px; font-size:20px; line-height:1.8; }
+.comments { margin-top:30px; background:#111; padding:15px; border-radius:10px; border:1px solid #0f0; }
+.comment { padding:10px; margin-bottom:10px; border-bottom:1px dashed #0f0; }
+.login-box { width:300px; margin:60px auto; background:#0a0a0a; padding:20px; border-radius:12px; border:2px solid #0f0; box-shadow:0 0 20px #0f0; text-align:center; }
+input { width:90%; padding:10px; margin-top:10px; background:#000; border:1px solid #0f0; color:#0f0; border-radius:6px; }
+button { margin-top:15px; padding:10px 20px; background:#000; border:1px solid #0f0; color:#0f0; cursor:pointer; border-radius:6px; }
+textarea { width:100%; height:80px; background:#000; color:#0f0; margin-top:15px; border:1px solid #0f0; border-radius:8px; padding:10px; }
 </style>
 </head>
 <body>
 
+<!-- تسجيل الدخول -->
 <div id="login" class="login-box">
-  <h2>تسجيل الدخول</h2>
+  <h2>تسجيل الدخول / إنشاء حساب</h2>
   <input type="email" id="email" placeholder="البريد الإلكتروني">
   <input type="password" id="password" placeholder="كلمة المرور">
   <button onclick="emailLogin()">دخول عبر البريد</button>
+  <button onclick="signUp()">إنشاء حساب جديد</button>
   <br><br>
   <button onclick="googleLogin()">تسجيل دخول بواسطة Google</button>
-  <p style="color:red; display:none;" id="error">حدث خطأ في تسجيل الدخول</p>
+  <p style="color:red; display:none;" id="error">حدث خطأ أثناء تسجيل الدخول أو التسجيل</p>
 </div>
 
+<!-- المحتوى -->
 <div id="content" style="display:none;">
 <header>
   <h1>موقع العالــمي</h1>
@@ -107,22 +41,22 @@ button {
 <div class="container">
   <h2>📄 المقال الرئيسي</h2>
   <div class="article-box" id="article">
-     مرحبا بك في موقع العالمي (ل انشاء لينكات) ل انشاء لينكات ل صور ل اغني لبرامج ل ملفات وغير.......
-    التسجيل مجاني والموقع مجاني بشكل كامل
-    وسوف يتم تحديث الموقع بشكل دوري
-    وايضا سوف نعلمك البرمجه 
-    قريبا........
+    هنا يتم وضع مقالك الأساسي… (هذا النص ثابت ولا يمكن لأحد تعديله)
   </div>
 
   <h2 style="margin-top:35px;">💬 التعليقات</h2>
   <div class="comments" id="comments"></div>
-
-  <textarea id="newComment" style="width:100%; height:80px; background:#000; color:#0f0; margin-top:15px; border:1px solid #0f0; border-radius:8px; padding:10px;" placeholder="اكتب تعليقك هنا..."></textarea>
+  <textarea id="newComment" placeholder="اكتب تعليقك هنا..."></textarea>
   <button onclick="addComment()">إضافة تعليق</button>
 </div>
 </div>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+
 <script>
+// ===== Firebase Config =====
 const firebaseConfig = {
   apiKey: "AIzaSyD8VShkW_oEKB1n1cAaPoyT9Qy3P8dREp8",
   authDomain: "elalmy-49226.firebaseapp.com",
@@ -133,43 +67,54 @@ const firebaseConfig = {
   measurementId: "G-H11JSN719C"
 };
 firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
+
+// ===== تسجيل دخول Google =====
+function googleLogin(){
+  auth.signInWithPopup(provider)
+  .then(() => {
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+  })
+  .catch(() => { document.getElementById('error').style.display = 'block'; });
+}
+
+// ===== تسجيل دخول البريد =====
 function emailLogin(){
   const email = document.getElementById('email').value;
-  const pass = document.getElementById('password').value;
-  firebase.auth().signInWithEmailAndPassword(email, pass)
+  const password = document.getElementById('password').value;
+  auth.signInWithEmailAndPassword(email, password)
     .then(() => {
       document.getElementById('login').style.display = 'none';
       document.getElementById('content').style.display = 'block';
     })
-    .catch(() => {
-      document.getElementById('error').style.display = 'block';
-    });
+    .catch(() => { document.getElementById('error').style.display = 'block'; });
 }
 
-function googleLogin(){
-  firebase.auth().signInWithPopup(provider)
-    .then(result => {
+// ===== إنشاء حساب جديد =====
+function signUp(){
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(() => {
       document.getElementById('login').style.display = 'none';
       document.getElementById('content').style.display = 'block';
     })
-    .catch(() => {
-      document.getElementById('error').style.display = 'block';
-    });
+    .catch(() => { document.getElementById('error').style.display = 'block'; });
 }
+
+// ===== التعليقات =====
 function addComment(){
   const text = document.getElementById('newComment').value;
   if(text.trim() === '') return;
-  const box = document.getElementById('comments');
   const div = document.createElement('div');
   div.className = 'comment';
   div.innerText = text;
-  box.appendChild(div);
+  document.getElementById('comments').appendChild(div);
   document.getElementById('newComment').value = '';
 }
 </script>
 
 </body>
 </html>
-
-
