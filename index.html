@@ -5,19 +5,104 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>العالــمي - الرئيسية</title>
 <style>
-body { background: #000; font-family: Arial; color: #0f0; direction: rtl; margin:0; padding:0; }
-header { background: #000; padding: 25px; text-align:center; border-bottom:2px solid #0f0; box-shadow:0 0 20px #0f0; }
-header h1 { margin:0; font-size:38px; text-shadow:0 0 12px #0f0; }
-.container { width:85%; max-width:900px; margin:40px auto; background:#070707; padding:25px; border:2px solid #0f0; border-radius:15px; box-shadow:0 0 25px #0f0; }
-.article-box { background:#111; border:2px solid #0f0; padding:20px; border-radius:10px; min-height:200px; font-size:20px; line-height:1.8; }
-.comments { margin-top:30px; background:#111; padding:15px; border-radius:10px; border:1px solid #0f0; }
-.comment { padding:10px; margin-bottom:10px; border-bottom:1px dashed #0f0; }
-.login-box { width:300px; margin:60px auto; background:#0a0a0a; padding:20px; border-radius:12px; border:2px solid #0f0; box-shadow:0 0 20px #0f0; text-align:center; }
-input { width:90%; padding:10px; margin-top:10px; background:#000; border:1px solid #0f0; color:#0f0; border-radius:6px; }
-button { margin-top:15px; padding:10px 20px; background:#000; border:1px solid #0f0; color:#0f0; cursor:pointer; border-radius:6px; }
-textarea { width:100%; height:80px; background:#000; color:#0f0; margin-top:15px; border:1px solid #0f0; border-radius:8px; padding:10px; }
-#errorMsg { color:red; margin-top:10px; display:none; }
-#fileLink a { color: #0f0; text-decoration: underline; }
+body { 
+    background: #000; 
+    font-family: Arial, sans-serif; 
+    color: #0f0; 
+    direction: rtl; 
+    margin:0; padding:0; 
+}
+header { 
+    background: #000; 
+    padding: 25px; 
+    text-align:center; 
+    border-bottom:2px solid #0f0; 
+    box-shadow:0 0 20px #0f0; 
+}
+header h1 { 
+    margin:0; 
+    font-size:38px; 
+    text-shadow: 0 0 12px #0f0; 
+}
+.container { 
+    width:85%; 
+    max-width:900px; 
+    margin:40px auto; 
+    background:#070707; 
+    padding:25px; 
+    border:2px solid #0f0; 
+    border-radius:15px; 
+    box-shadow:0 0 25px #0f0; 
+    display:none; /* مخفي قبل تسجيل الدخول */
+}
+.article-box { 
+    background:#111; 
+    border:2px solid #0f0; 
+    padding:20px; 
+    border-radius:10px; 
+    min-height:200px; 
+    font-size:20px; 
+    line-height:1.8; 
+}
+.comments { 
+    margin-top:30px; 
+    background:#111; 
+    padding:15px; 
+    border-radius:10px; 
+    border:1px solid #0f0; 
+}
+.comment { 
+    padding:10px; 
+    margin-bottom:10px; 
+    border-bottom:1px dashed #0f0; 
+}
+.login-box { 
+    width:300px; 
+    margin:60px auto; 
+    background:#0a0a0a; 
+    padding:20px; 
+    border-radius:12px; 
+    border:2px solid #0f0; 
+    box-shadow:0 0 20px #0f0; 
+    text-align:center; 
+}
+input, textarea { 
+    width:90%; 
+    padding:10px; 
+    margin-top:10px; 
+    background:#000; 
+    border:1px solid #0f0; 
+    color:#0f0; 
+    border-radius:6px; 
+}
+button { 
+    margin-top:15px; 
+    padding:10px 20px; 
+    background:#000; 
+    border:1px solid #0f0; 
+    color:#0f0; 
+    cursor:pointer; 
+    border-radius:6px; 
+    transition: all 0.3s; 
+}
+button:hover {
+    box-shadow: 0 0 15px #0f0, 0 0 25px #0f0 inset;
+}
+textarea { 
+    width:100%; 
+    height:80px; 
+    margin-top:15px; 
+    padding:10px; 
+}
+#errorMsg { 
+    color:red; 
+    margin-top:10px; 
+    display:none; 
+}
+#fileLink a { 
+    color: #0f0; 
+    text-decoration: underline; 
+}
 </style>
 </head>
 <body>
@@ -35,23 +120,21 @@ textarea { width:100%; height:80px; background:#000; color:#0f0; margin-top:15px
 </div>
 
 <!-- المحتوى -->
-<div id="content">
+<div class="container" id="content">
 <header>
   <h1>موقع العالــمي</h1>
 </header>
 
-<div class="container">
+<div>
   <h2>📄 المقال الرئيسي</h2>
   <div class="article-box" id="article">
-    موقع العاللمي لرفع الملفات يصنع لينك مباشر ل صوره او فديو او ملف اوحته APK كل الي انتا عزو هتلقي مرحبا بك
-    مستني منك تعليقك الحلو
-    وشكرا
+    موقع العاللمي لرفع الملفات يصنع لينك مباشر لأي ملف 📁📸🎥 APK… مرحبًا بك! مستني منك تعليقك الحلو، وشكرًا.
   </div>
 
   <h2 style="margin-top:35px;">💬 التعليقات</h2>
-  <div class="comments" id="comments" style="display:none;"></div>
-  <textarea id="newComment" placeholder="اكتب تعليقك هنا..." style="display:none;"></textarea>
-  <button onclick="addComment()" style="display:none;">إضافة تعليق</button>
+  <div class="comments" id="comments"></div>
+  <textarea id="newComment" placeholder="اكتب تعليقك هنا..."></textarea>
+  <button onclick="addComment()">إضافة تعليق</button>
 
   <h2 style="margin-top:35px;">📁 رفع الملفات</h2>
   <input type="hidden" role="uploadcare-uploader" data-public-key="994dc8b431d0cb416e3c" />
@@ -62,6 +145,7 @@ textarea { width:100%; height:80px; background:#000; color:#0f0; margin-top:15px
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
 <!-- Uploadcare Widget -->
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
@@ -79,6 +163,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
+const db = firebase.firestore();
 const provider = new firebase.auth.GoogleAuthProvider();
 
 // ===== تسجيل دخول Google =====
@@ -113,23 +198,40 @@ function showError(msg){
   e.innerText = msg;
 }
 
-// ===== تفعيل التعليقات بعد تسجيل الدخول =====
+// ===== عرض المحتوى بعد تسجيل الدخول =====
 function showLoggedInFeatures(){
   document.getElementById('login').style.display = 'none';
-  document.getElementById('comments').style.display = 'block';
-  document.getElementById('newComment').style.display = 'block';
-  document.querySelector('button[onclick="addComment()"]').style.display = 'block';
+  document.getElementById('content').style.display = 'block';
+  loadComments();
 }
 
 // ===== التعليقات =====
 function addComment(){
-  const text = document.getElementById('newComment').value;
-  if(text.trim() === '') return;
-  const div = document.createElement('div');
-  div.className = 'comment';
-  div.innerText = text;
-  document.getElementById('comments').appendChild(div);
+  const text = document.getElementById('newComment').value.trim();
+  if(text === '') return;
+  const user = auth.currentUser.email || 'زائر';
+  db.collection('comments').add({
+    user: user,
+    text: text,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  });
   document.getElementById('newComment').value = '';
+}
+
+// ===== تحميل التعليقات من Firebase =====
+function loadComments(){
+  const commentsDiv = document.getElementById('comments');
+  commentsDiv.innerHTML = '';
+  db.collection('comments').orderBy('timestamp').onSnapshot(snapshot => {
+    commentsDiv.innerHTML = '';
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const div = document.createElement('div');
+      div.className = 'comment';
+      div.innerText = `${data.user}: ${data.text}`;
+      commentsDiv.appendChild(div);
+    });
+  });
 }
 
 // ===== Uploadcare Widget =====
