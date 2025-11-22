@@ -33,6 +33,7 @@ header h1 {
     border:2px solid #0f0; 
     border-radius:15px; 
     box-shadow:0 0 25px #0f0; 
+    display:none; /* مخفي قبل تسجيل الدخول */
 }
 .article-box { 
     background:#111; 
@@ -200,6 +201,8 @@ function showError(msg){
 // ===== عرض المحتوى بعد تسجيل الدخول =====
 function showLoggedInFeatures(){
   document.getElementById('login').style.display = 'none';
+  document.getElementById('content').style.display = 'block';
+  loadComments();
 }
 
 // ===== التعليقات =====
@@ -231,10 +234,6 @@ function loadComments(){
     });
   });
 }
-
-// عرض التعليقات للزوار
-document.getElementById('content').style.display = 'block';
-loadComments();
 
 // ===== Uploadcare Widget =====
 UPLOADCARE_LOCALE = "ar";
